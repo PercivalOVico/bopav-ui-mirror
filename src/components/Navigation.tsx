@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,9 +21,11 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Bopav Studios
-              </span>
+              <Link to="/">
+                <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  Bopav Studios
+                </span>
+              </Link>
             </div>
           </div>
 
@@ -44,12 +47,16 @@ const Navigation = () => {
           {/* Desktop CTA */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-gray-300 hover:text-white">
-                Sign In
-              </Button>
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
-                Get Started
-              </Button>
+              <Link to="/login">
+                <Button variant="ghost" className="text-gray-300 hover:text-white">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -81,12 +88,16 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="pt-4 pb-2 border-t border-gray-800 mt-4">
-                <Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-white mb-2">
-                  Sign In
-                </Button>
-                <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
-                  Get Started
-                </Button>
+                <Link to="/login">
+                  <Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-white mb-2">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
