@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Eye, EyeOff, LogIn, X, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,18 +16,99 @@ const LoginForm = () => {
     password: '',
     confirmPassword: ''
   });
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    general: ''
+  });
+  const [isShaking, setIsShaking] = useState(false);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      general: ''
+    };
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 5) {
+      newErrors.password = 'Password must be at least 5 characters long';
+    }
+
+    // Confirm password validation (only for sign up)
+    if (isSignUp) {
+      if (!formData.confirmPassword) {
+        newErrors.confirmPassword = 'Please confirm your password';
+      } else if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
+    }
+
+    setErrors(newErrors);
+    return !newErrors.email && !newErrors.password && !newErrors.confirmPassword;
+  };
+
+  const triggerShakeEffect = () => {
+    setIsShaking(true);
+    setTimeout(() => setIsShaking(false), 600);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      triggerShakeEffect();
+      return;
+    }
+
+    // Simulate authentication check (replace with real auth logic)
+    // For demo purposes, any email/password combination will be "invalid"
+    setErrors({
+      email: '',
+      password: '',
+      confirmPassword: '',
+      general: 'Invalid credentials, please try again'
+    });
+    triggerShakeEffect();
+    
     console.log('Form submitted:', formData);
-    // Handle login/signup logic here
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+    
+    // Clear specific field error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+        general: ''
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/');
   };
 
   return (
@@ -33,7 +117,22 @@ const LoginForm = () => {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
       
       <div className="relative z-10 w-full max-w-md px-4">
-        <div className="bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 border border-gray-700 shadow-2xl">
+        <div className={`bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 border transition-all duration-300 ${
+          isShaking ? 'animate-[shake_0.6s_ease-in-out] border-red-500 shadow-red-500/25' : 
+          errors.general ? 'border-red-500 shadow-red-500/25' : 'border-gray-700'
+        } shadow-2xl`}>
+          {/* Cancel Button */}
+          <div className="flex justify-end mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleCancel}
+              className="text-gray-400 hover:text-white hover:bg-gray-700"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+
           {/* Logo/Brand */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
@@ -43,6 +142,16 @@ const LoginForm = () => {
               {isSignUp ? 'Create your account' : 'Welcome back'}
             </p>
           </div>
+
+          {/* General Error Alert */}
+          {errors.general && (
+            <Alert variant="destructive" className="mb-6 bg-red-900/20 border-red-500">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription className="text-red-400">
+                {errors.general}
+              </AlertDescription>
+            </Alert>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -58,9 +167,14 @@ const LoginForm = () => {
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                className={`bg-gray-700/50 border text-white placeholder:text-gray-400 focus:ring-purple-500/20 ${
+                  errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-purple-500'
+                }`}
                 required
               />
+              {errors.email && (
+                <p className="text-red-400 text-sm">{errors.email}</p>
+              )}
             </div>
 
             {/* Password Field */}
@@ -76,7 +190,9 @@ const LoginForm = () => {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/20 pr-10"
+                  className={`bg-gray-700/50 border text-white placeholder:text-gray-400 focus:ring-purple-500/20 pr-10 ${
+                    errors.password ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-purple-500'
+                  }`}
                   required
                 />
                 <button
@@ -87,6 +203,9 @@ const LoginForm = () => {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-400 text-sm">{errors.password}</p>
+              )}
             </div>
 
             {/* Confirm Password Field (Sign Up only) */}
@@ -102,9 +221,14 @@ const LoginForm = () => {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                  className={`bg-gray-700/50 border text-white placeholder:text-gray-400 focus:ring-purple-500/20 ${
+                    errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-purple-500'
+                  }`}
                   required
                 />
+                {errors.confirmPassword && (
+                  <p className="text-red-400 text-sm">{errors.confirmPassword}</p>
+                )}
               </div>
             )}
 
@@ -136,7 +260,11 @@ const LoginForm = () => {
               {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
               <button
                 type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setErrors({ email: '', password: '', confirmPassword: '', general: '' });
+                  setFormData({ email: '', password: '', confirmPassword: '' });
+                }}
                 className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
               >
                 {isSignUp ? 'Sign In' : 'Sign Up'}
@@ -163,6 +291,14 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+          20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+      `}</style>
     </div>
   );
 };
