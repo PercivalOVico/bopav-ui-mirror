@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -136,7 +135,7 @@ const LoginForm = () => {
           {/* Logo/Brand */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
-              Bopav Studios
+              BBROKER
             </h1>
             <p className="text-gray-300 text-sm">
               {isSignUp ? 'Create your account' : 'Welcome back'}
@@ -277,22 +276,22 @@ const LoginForm = () => {
             <div className="space-y-3 text-sm text-gray-400">
               <div className="flex items-center">
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
-                Free forever plan available
+                Connect with businesses
               </div>
               <div className="flex items-center">
                 <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                No credit card required
+                Discover business content
               </div>
               <div className="flex items-center">
                 <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
-                Start automating in minutes
+                Start networking today
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <style jsx>{`
+      <style>{`
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }

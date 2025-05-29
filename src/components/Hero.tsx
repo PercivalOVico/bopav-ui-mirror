@@ -14,21 +14,21 @@ const Hero = () => {
           <div className="text-center lg:text-left">
             <div className="mb-6">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                ✨ Creative Automation Platform
+                ✨ Business Networking Platform
               </span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Build powerful{' '}
+              Connect with{' '}
               <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                creative workflows
+                businesses
               </span>{' '}
-              without limits
+              and brokers worldwide
             </h1>
             
             <p className="text-xl text-gray-300 mb-8 max-w-2xl">
-              Bopav Studios empowers creators and agencies to automate their creative processes, 
-              streamline collaborations, and deliver exceptional results faster than ever before.
+              BBROKER connects businesses and professionals through a powerful networking platform. 
+              Discover business content, engage with posts, and build meaningful connections.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -36,7 +36,7 @@ const Hero = () => {
                 size="lg" 
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg font-semibold group"
               >
-                Start Creating Free
+                Start Networking Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
@@ -79,10 +79,10 @@ const Hero = () => {
                 </div>
                 
                 <div className="mt-6 p-4 bg-gray-700/50 rounded-lg">
-                  <div className="text-xs text-gray-400 mb-2">Workflow Status</div>
+                  <div className="text-xs text-gray-400 mb-2">Network Status</div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-green-400">Creative automation running</span>
+                    <span className="text-sm text-green-400">Connected to business network</span>
                   </div>
                 </div>
               </div>

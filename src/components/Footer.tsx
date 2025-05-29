@@ -56,12 +56,12 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="mb-6">
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Bopav Studios
+                BBROKER
               </span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Empowering creators worldwide with intelligent automation tools that transform 
-              creative workflows and unlock unlimited potential.
+              Connecting businesses and professionals worldwide through a powerful networking platform 
+              that transforms how you discover and engage with business content.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
@@ -100,10 +100,10 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2024 Bopav Studios. All rights reserved.
+            © 2024 BBROKER. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 text-sm text-gray-400">
-            <span>Made with ❤️ for creators worldwide</span>
+            <span>Made for business professionals worldwide</span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
