@@ -121,20 +121,20 @@ const Posts = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
       <Navigation />
       
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
               Business{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Posts
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Discover engaging content from businesses worldwide. Like, comment, and save posts that inspire you.
             </p>
           </div>
@@ -147,20 +147,20 @@ const Posts = () => {
                 placeholder="Search businesses or content..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-purple-500 rounded-full"
+                className="pl-10 bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 rounded-full backdrop-blur-sm"
               />
             </div>
             <Button
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full px-6"
+              className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-full px-6 backdrop-blur-sm"
             >
               <Filter className="h-4 w-4 mr-2" />
               Filter
             </Button>
           </div>
 
-          {/* Masonry Grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+          {/* Masonry Grid - Updated for mobile 2 columns */}
+          <div className="columns-2 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
             {filteredPosts.map((post) => (
               <div key={post.id} className="break-inside-avoid mb-4">
                 <MasonryPostCard {...post} />
@@ -171,8 +171,8 @@ const Posts = () => {
           {/* Loading indicator */}
           {loading && (
             <div className="text-center mt-8">
-              <div className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-purple-500 bg-white">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <div className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-purple-400 bg-gray-800/50 backdrop-blur-sm">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -184,7 +184,7 @@ const Posts = () => {
           {/* End of posts message */}
           {!hasMore && !loading && (
             <div className="text-center mt-12">
-              <p className="text-gray-500 text-lg">You've reached the end! 🎉</p>
+              <p className="text-gray-400 text-lg">You've reached the end! 🎉</p>
             </div>
           )}
         </div>
@@ -219,7 +219,7 @@ const MasonryPostCard = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200">
+    <div className="bg-gray-800/40 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 overflow-hidden border border-gray-700/50">
       {/* Media */}
       <div className="relative">
         {mediaType === 'image' ? (
@@ -256,8 +256,8 @@ const MasonryPostCard = ({
           size="sm"
           onClick={handleSave}
           className={`absolute top-3 right-3 rounded-full p-2 ${
-            isSaved ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-white/90 text-gray-700 hover:bg-white'
-          } transition-colors shadow-sm`}
+            isSaved ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-gray-800/70 text-white hover:bg-gray-700/70'
+          } transition-colors shadow-sm backdrop-blur-sm`}
         >
           <svg className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
@@ -272,17 +272,17 @@ const MasonryPostCard = ({
           <img
             src={businessAvatar}
             alt={businessName}
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-8 h-8 rounded-full object-cover border-2 border-purple-500/30"
           />
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-gray-900 truncate">{businessName}</h3>
-            <p className="text-xs text-gray-500">{timeAgo}</p>
+            <h3 className="text-sm font-semibold text-white truncate">{businessName}</h3>
+            <p className="text-xs text-gray-400">{timeAgo}</p>
           </div>
         </div>
 
         {/* Post Content */}
         {content && (
-          <p className="text-gray-700 text-sm mb-3 line-clamp-3">{content}</p>
+          <p className="text-gray-300 text-sm mb-3 line-clamp-3">{content}</p>
         )}
 
         {/* Actions */}
@@ -293,7 +293,7 @@ const MasonryPostCard = ({
               size="sm"
               onClick={handleLike}
               className={`${
-                isLiked ? 'text-red-500 hover:text-red-400' : 'text-gray-500 hover:text-gray-700'
+                isLiked ? 'text-red-500 hover:text-red-400' : 'text-gray-400 hover:text-white'
               } transition-colors p-1`}
             >
               <svg className={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -301,14 +301,14 @@ const MasonryPostCard = ({
               </svg>
               <span className="text-xs">{likesCount}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 p-1">
+            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white p-1">
               <svg className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               <span className="text-xs">{comments}</span>
             </Button>
           </div>
-          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 p-1">
+          <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white p-1">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
               <polyline points="16,6 12,2 8,6"/>
