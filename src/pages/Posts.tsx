@@ -213,6 +213,7 @@ const MasonryPostCard = ({
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [likesCount, setLikesCount] = useState(likes);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -226,6 +227,10 @@ const MasonryPostCard = ({
 
   const handleSave = () => {
     setIsSaved(!isSaved);
+  };
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
   };
 
   const nextMedia = () => {
@@ -432,6 +437,20 @@ const MasonryPostCard = ({
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               <span className="text-xs">{comments}</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleFollow}
+              className={`${
+                isFollowing 
+                  ? 'text-purple-400 hover:text-purple-300 bg-purple-500/10 hover:bg-purple-500/20' 
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700/30'
+              } transition-colors px-2 py-1 rounded-md`}
+            >
+              <span className="text-xs font-medium">
+                {isFollowing ? 'Following' : 'Follow'}
+              </span>
             </Button>
           </div>
           <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white p-1">
