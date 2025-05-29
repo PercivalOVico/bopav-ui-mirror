@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import Navigation from '@/components/Navigation';
 import PostCard from '@/components/PostCard';
@@ -12,7 +11,7 @@ const Posts = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  // Extended sample business posts data with varying heights
+  // Extended sample business posts data with multiple media items
   const generatePosts = (startId: number, count: number) => {
     const businesses = [
       {
@@ -47,7 +46,7 @@ const Posts = () => {
       }
     ];
 
-    const images = [
+    const mediaItems = [
       'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&fit=crop',
       'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&fit=crop',
       'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&fit=crop',
@@ -62,20 +61,28 @@ const Posts = () => {
 
     return Array.from({ length: count }, (_, i) => {
       const businessIndex = (startId + i) % businesses.length;
-      const imageIndex = (startId + i) % images.length;
       const business = businesses[businessIndex];
+      
+      // Generate 1-4 media items per post
+      const mediaCount = Math.floor(Math.random() * 4) + 1;
+      const media = Array.from({ length: mediaCount }, (_, mediaIndex) => {
+        const itemIndex = (startId + i + mediaIndex) % mediaItems.length;
+        return {
+          url: mediaItems[itemIndex],
+          type: Math.random() > 0.3 ? 'image' : 'video'
+        };
+      });
       
       return {
         id: (startId + i).toString(),
         businessName: business.name,
         businessAvatar: business.avatar,
         content: business.content,
-        mediaUrl: images[imageIndex],
-        mediaType: Math.random() > 0.3 ? 'image' : 'video',
+        media: media,
         likes: Math.floor(Math.random() * 300) + 50,
         comments: Math.floor(Math.random() * 50) + 5,
         timeAgo: `${Math.floor(Math.random() * 24) + 1} hours ago`,
-        height: Math.floor(Math.random() * 200) + 250 // Random height for masonry effect
+        height: Math.floor(Math.random() * 200) + 250
       };
     });
   };
@@ -193,13 +200,12 @@ const Posts = () => {
   );
 };
 
-// Masonry-optimized Post Card Component
+// Masonry-optimized Post Card Component with Carousel and Video Controls
 const MasonryPostCard = ({
   businessName,
   businessAvatar,
   content,
-  mediaUrl,
-  mediaType,
+  media,
   likes,
   comments,
   timeAgo,
@@ -208,6 +214,10 @@ const MasonryPostCard = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [likesCount, setLikesCount] = useState(likes);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [isMuted, setIsMuted] = useState(false);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -218,35 +228,151 @@ const MasonryPostCard = ({
     setIsSaved(!isSaved);
   };
 
+  const nextMedia = () => {
+    setCurrentMediaIndex((prev) => (prev + 1) % media.length);
+  };
+
+  const prevMedia = () => {
+    setCurrentMediaIndex((prev) => (prev - 1 + media.length) % media.length);
+  };
+
+  const goToMedia = (index) => {
+    setCurrentMediaIndex(index);
+  };
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    setIsMuted(newVolume === 0);
+  };
+
+  const currentMedia = media[currentMediaIndex];
+
   return (
     <div className="bg-gray-800/40 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 overflow-hidden border border-gray-700/50">
-      {/* Media */}
+      {/* Media Carousel */}
       <div className="relative">
-        {mediaType === 'image' ? (
-          <img
-            src={mediaUrl}
-            alt="Post content"
-            className="w-full object-cover"
-            style={{ height: `${height}px` }}
-          />
-        ) : (
-          <div className="relative" style={{ height: `${height}px` }}>
-            <video
-              src={mediaUrl}
-              className="w-full h-full object-cover"
-              controls={false}
-              poster={mediaUrl}
+        <div className="relative overflow-hidden" style={{ height: `${height}px` }}>
+          {currentMedia.type === 'image' ? (
+            <img
+              src={currentMedia.url}
+              alt="Post content"
+              className="w-full h-full object-cover transition-transform duration-300"
             />
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <Button
-                size="lg"
-                className="bg-white/90 hover:bg-white text-gray-900 rounded-full p-3"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </Button>
+          ) : (
+            <div className="relative h-full">
+              <video
+                src={currentMedia.url}
+                className="w-full h-full object-cover"
+                poster={currentMedia.url}
+                muted={isMuted}
+                loop
+                playsInline
+                style={{ 
+                  transform: `translateY(${isPlaying ? '-2px' : '0px'})`,
+                  transition: 'transform 0.3s ease'
+                }}
+              />
+              
+              {/* Video Controls Overlay */}
+              <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="flex items-center justify-between bg-black/50 rounded-lg p-2 backdrop-blur-sm">
+                    <Button
+                      size="sm"
+                      onClick={togglePlay}
+                      className="bg-white/20 hover:bg-white/30 text-white p-2"
+                    >
+                      {isPlaying ? (
+                        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                        </svg>
+                      ) : (
+                        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      )}
+                    </Button>
+                    
+                    <div className="flex items-center space-x-2 flex-1 mx-3">
+                      <Button
+                        size="sm"
+                        onClick={toggleMute}
+                        className="bg-white/20 hover:bg-white/30 text-white p-1"
+                      >
+                        {isMuted ? (
+                          <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                          </svg>
+                        ) : (
+                          <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                          </svg>
+                        )}
+                      </Button>
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.1"
+                        value={isMuted ? 0 : volume}
+                        onChange={handleVolumeChange}
+                        className="flex-1 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          )}
+        </div>
+
+        {/* Navigation arrows for multiple media */}
+        {media.length > 1 && (
+          <>
+            <Button
+              onClick={prevMedia}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
+              size="sm"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </Button>
+            <Button
+              onClick={nextMedia}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
+              size="sm"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Button>
+          </>
+        )}
+
+        {/* Dots indicator for multiple media */}
+        {media.length > 1 && (
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {media.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToMedia(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                  index === currentMediaIndex 
+                    ? 'bg-white shadow-lg' 
+                    : 'bg-white/50 hover:bg-white/70'
+                }`}
+              />
+            ))}
           </div>
         )}
         
