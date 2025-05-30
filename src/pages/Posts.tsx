@@ -4,7 +4,7 @@ import PostCard from '@/components/PostCard';
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { RightSidebar } from '@/components/RightSidebar';
 
@@ -138,13 +138,16 @@ const Posts = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
-        <AppSidebar />
+        {/* Left Sidebar - Hidden on mobile */}
+        <div className="hidden lg:block">
+          <AppSidebar />
+        </div>
         
-        {/* Center content with proper margins for sidebars */}
-        <div className="flex-1 ml-64 mr-80">
+        {/* Center content with responsive margins */}
+        <div className="flex-1 lg:ml-64 lg:mr-80 mx-0">
           <div 
             id="center-content"
-            className="h-screen overflow-y-auto px-6 py-6"
+            className="h-screen overflow-y-auto px-4 lg:px-6 py-6"
           >
             <div className="max-w-4xl mx-auto">
               {/* Header */}
@@ -181,7 +184,7 @@ const Posts = () => {
               </div>
 
               {/* Masonry Grid */}
-              <div className="columns-2 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
                 {filteredPosts.map((post) => (
                   <div key={post.id} className="break-inside-avoid mb-4">
                     <MasonryPostCard {...post} />
@@ -212,7 +215,10 @@ const Posts = () => {
           </div>
         </div>
         
-        <RightSidebar />
+        {/* Right Sidebar - Hidden on mobile */}
+        <div className="hidden lg:block">
+          <RightSidebar />
+        </div>
       </div>
     </SidebarProvider>
   );

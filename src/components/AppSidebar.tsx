@@ -52,7 +52,7 @@ const menuItems = [
 export function AppSidebar() {
   return (
     <Sidebar className="border-r border-gray-700/50 bg-gray-900/90 backdrop-blur-md fixed h-screen w-64 left-0 top-0 z-40">
-      <SidebarHeader className="p-6">
+      <SidebarHeader className="p-6 border-b border-gray-700/30">
         <div className="flex items-center space-x-3">
           <div className="relative">
             <img
@@ -69,7 +69,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       
-      <SidebarContent className="px-4 overflow-hidden">
+      <SidebarContent className="px-4 overflow-hidden bg-gray-900/90">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
