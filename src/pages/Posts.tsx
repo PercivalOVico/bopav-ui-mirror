@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import Navigation from '@/components/Navigation';
 import PostCard from '@/components/PostCard';
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -114,15 +113,20 @@ const Posts = () => {
     }, 1000);
   }, [posts.length, loading, hasMore]);
 
-  // Infinite scroll handler
+  // Infinite scroll handler for center content only
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-      loadMorePosts();
+    const handleScroll = (e) => {
+      const element = e.target;
+      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+        loadMorePosts();
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const centerContent = document.getElementById('center-content');
+    if (centerContent) {
+      centerContent.addEventListener('scroll', handleScroll);
+      return () => centerContent.removeEventListener('scroll', handleScroll);
+    }
   }, [loadMorePosts]);
 
   const filteredPosts = posts.filter(post =>
@@ -136,10 +140,11 @@ const Posts = () => {
         <AppSidebar />
         
         <SidebarInset className="flex-1">
-          <Navigation />
-          
-          <div className="pt-20 pb-12">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            id="center-content"
+            className="h-screen overflow-y-auto px-4 py-6"
+          >
+            <div className="max-w-4xl mx-auto">
               {/* Header */}
               <div className="text-center mb-8">
                 <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
