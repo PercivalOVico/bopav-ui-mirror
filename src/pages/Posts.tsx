@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import PostCard from '@/components/PostCard';
 import { Search, Filter } from 'lucide-react';
@@ -130,6 +129,7 @@ const Posts = () => {
     }
   }, [loadMorePosts]);
 
+
   const filteredPosts = posts.filter(post =>
     post.businessName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.content.toLowerCase().includes(searchTerm.toLowerCase())
@@ -139,7 +139,7 @@ const Posts = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
         {/* Left Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block w-64 fixed left-0 top-0 h-full">
           <AppSidebar />
         </div>
         
@@ -216,7 +216,7 @@ const Posts = () => {
         </div>
         
         {/* Right Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block w-80 fixed right-0 top-0 h-full">
           <RightSidebar />
         </div>
       </div>
