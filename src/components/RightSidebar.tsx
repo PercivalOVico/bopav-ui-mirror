@@ -36,7 +36,7 @@ const recommendations = [
 
 export function RightSidebar() {
   return (
-    <div className="w-80 bg-gray-900/50 backdrop-blur-md p-6 space-y-6 border-l border-gray-700/50 fixed right-0 h-screen overflow-hidden">
+    <div className="w-80 bg-gray-900/90 backdrop-blur-md p-6 space-y-6 border-l border-gray-700/50 fixed right-0 top-0 h-screen overflow-hidden z-40">
       {/* Stories Section */}
       <div>
         <h3 className="text-white font-semibold text-lg mb-4">Stories</h3>

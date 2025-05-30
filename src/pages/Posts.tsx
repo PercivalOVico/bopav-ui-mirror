@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import PostCard from '@/components/PostCard';
 import { Search, Filter } from 'lucide-react';
@@ -139,10 +140,11 @@ const Posts = () => {
       <div className="min-h-screen flex w-full bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
         <AppSidebar />
         
-        <SidebarInset className="flex-1">
+        {/* Center content with proper margins for sidebars */}
+        <div className="flex-1 ml-64 mr-80">
           <div 
             id="center-content"
-            className="h-screen overflow-y-auto px-4 py-6"
+            className="h-screen overflow-y-auto px-6 py-6"
           >
             <div className="max-w-4xl mx-auto">
               {/* Header */}
@@ -208,7 +210,7 @@ const Posts = () => {
               )}
             </div>
           </div>
-        </SidebarInset>
+        </div>
         
         <RightSidebar />
       </div>

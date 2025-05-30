@@ -51,7 +51,7 @@ const menuItems = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-r border-gray-700/50 bg-gray-900/50 backdrop-blur-md fixed h-screen">
+    <Sidebar className="border-r border-gray-700/50 bg-gray-900/90 backdrop-blur-md fixed h-screen w-64 left-0 top-0 z-40">
       <SidebarHeader className="p-6">
         <div className="flex items-center space-x-3">
           <div className="relative">
