@@ -12,38 +12,32 @@ import { MapPin, Calendar, Link, Edit, Settings } from "lucide-react";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("posts");
 
-  // Mock data for demonstration
+  // Mock data for demonstration - updated to match Post interface
   const userPosts = [
     {
-      id: 1,
-      user: {
-        name: "Bogdan Nikitin",
-        username: "@nikitinteam",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
-      },
+      id: "1",
+      businessName: "Bogdan Nikitin",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face",
       content: "Just finished an amazing coding session! The new features are looking great.",
-      timestamp: "2h",
+      media: [{ url: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=500&h=300&fit=crop", type: "image" }],
       likes: 42,
       comments: 8,
-      shares: 3,
-      images: ["https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=500&h=300&fit=crop"]
+      timeAgo: "2h",
+      height: 300
     }
   ];
 
   const savedPosts = [
     {
-      id: 2,
-      user: {
-        name: "Jane Smith",
-        username: "@janesmith",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612c8e9?w=60&h=60&fit=crop&crop=face"
-      },
+      id: "2",
+      businessName: "Jane Smith",
+      businessAvatar: "https://images.unsplash.com/photo-1494790108755-2616b612c8e9?w=60&h=60&fit=crop&crop=face",
       content: "Beautiful sunset from my balcony today 🌅",
-      timestamp: "1d",
+      media: [{ url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop", type: "image" }],
       likes: 89,
       comments: 12,
-      shares: 5,
-      images: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop"]
+      timeAgo: "1d",
+      height: 280
     }
   ];
 
@@ -170,11 +164,11 @@ const Profile = () => {
             </TabsList>
 
             <TabsContent value="posts" className="mt-6">
-              <MasonryPostGrid posts={userPosts} />
+              <MasonryPostGrid posts={userPosts} loading={false} hasMore={false} />
             </TabsContent>
 
             <TabsContent value="saved" className="mt-6">
-              <MasonryPostGrid posts={savedPosts} />
+              <MasonryPostGrid posts={savedPosts} loading={false} hasMore={false} />
             </TabsContent>
 
             <TabsContent value="following-users" className="mt-6">
