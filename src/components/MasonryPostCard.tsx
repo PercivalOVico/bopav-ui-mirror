@@ -11,6 +11,7 @@ interface MasonryPostCardProps {
   comments: number;
   timeAgo: string;
   height: number;
+  onCommentClick?: () => void;
 }
 
 export const MasonryPostCard = ({
@@ -21,7 +22,8 @@ export const MasonryPostCard = ({
   likes,
   comments,
   timeAgo,
-  height
+  height,
+  onCommentClick
 }: MasonryPostCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -176,7 +178,6 @@ export const MasonryPostCard = ({
           </>
         )}
 
-        {/* Dots indicator for multiple media */}
         {media.length > 1 && (
           <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {media.map((_, index) => (
@@ -193,7 +194,6 @@ export const MasonryPostCard = ({
           </div>
         )}
         
-        {/* Save button overlay */}
         <Button
           variant="ghost"
           size="sm"
@@ -244,7 +244,12 @@ export const MasonryPostCard = ({
               </svg>
               <span className="text-xs">{likesCount}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white p-1">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-gray-400 hover:text-white p-1"
+              onClick={onCommentClick}
+            >
               <svg className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>

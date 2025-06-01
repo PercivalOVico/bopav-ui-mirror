@@ -1,5 +1,7 @@
 
 import { MasonryPostCard } from '@/components/MasonryPostCard';
+import { CommentModal } from '@/components/CommentModal';
+import { useState } from 'react';
 
 interface Post {
   id: string;
@@ -20,13 +22,23 @@ interface MasonryPostGridProps {
 }
 
 export const MasonryPostGrid = ({ posts, loading, hasMore }: MasonryPostGridProps) => {
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
+  const handleCommentClick = (post: Post) => {
+    setSelectedPost(post);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPost(null);
+  };
+
   return (
     <>
-      {/* Masonry Grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      {/* Masonry Grid - Updated to show 2 columns on mobile */}
+      <div className="columns-2 lg:columns-3 gap-4 space-y-4">
         {posts.map((post) => (
           <div key={post.id} className="break-inside-avoid mb-4">
-            <MasonryPostCard {...post} />
+            <MasonryPostCard {...post} onCommentClick={() => handleCommentClick(post)} />
           </div>
         ))}
       </div>
@@ -49,6 +61,15 @@ export const MasonryPostGrid = ({ posts, loading, hasMore }: MasonryPostGridProp
         <div className="text-center mt-12">
           <p className="text-gray-400 text-lg">You've reached the end! 🎉</p>
         </div>
+      )}
+
+      {/* Comment Modal */}
+      {selectedPost && (
+        <CommentModal
+          post={selectedPost}
+          isOpen={!!selectedPost}
+          onClose={handleCloseModal}
+        />
       )}
     </>
   );
