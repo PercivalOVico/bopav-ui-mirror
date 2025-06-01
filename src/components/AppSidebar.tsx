@@ -1,28 +1,46 @@
+
 import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader } from "@/components/ui/sidebar";
+import { useNavigate, useLocation } from "react-router-dom";
+
 const menuItems = [{
   title: "News Feed",
   icon: Home,
-  isActive: true
+  path: "/posts"
 }, {
   title: "Messages",
   icon: MessageCircle,
-  badge: "6"
+  badge: "6",
+  path: "/messages"
 }, {
   title: "Forums",
-  icon: Calendar
+  icon: Calendar,
+  path: "#"
 }, {
   title: "Friends",
   icon: Users,
-  badge: "3"
+  badge: "3",
+  path: "#"
 }, {
   title: "Media",
-  icon: Image
+  icon: Image,
+  path: "#"
 }, {
   title: "Settings",
-  icon: Settings
+  icon: Settings,
+  path: "#"
 }];
+
 export function AppSidebar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavigation = (path: string) => {
+    if (path !== "#") {
+      navigate(path);
+    }
+  };
+
   return <Sidebar className="border-r border-gray-700/50 bg-gray-900/90 backdrop-blur-md fixed h-screen w-64 left-0 top-0 z-40">
       <SidebarHeader className="p-6 border-b border-gray-700/30 bg-slate-800">
         <div className="flex items-center space-x-3">
@@ -41,19 +59,27 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map(item => <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className={`${item.isActive ? 'bg-purple-600/20 text-purple-400 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'} transition-all duration-200 rounded-xl mb-2 relative`}>
-                    <a href="#" className="flex items-center justify-between w-full">
-                      <div className="flex items-center gap-3">
-                        <item.icon className="h-5 w-5" />
-                        <span className="font-medium">{item.title}</span>
+              {menuItems.map(item => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton 
+                      onClick={() => handleNavigation(item.path)}
+                      className={`${isActive ? 'bg-purple-600/20 text-purple-400 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'} transition-all duration-200 rounded-xl mb-2 relative cursor-pointer`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-3">
+                          <item.icon className="h-5 w-5" />
+                          <span className="font-medium">{item.title}</span>
+                        </div>
+                        {item.badge && <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                            {item.badge}
+                          </span>}
                       </div>
-                      {item.badge && <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
-                          {item.badge}
-                        </span>}
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>)}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
