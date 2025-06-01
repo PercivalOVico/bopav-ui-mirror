@@ -41,9 +41,16 @@ export function AppSidebar() {
     }
   };
 
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   return <Sidebar className="border-r border-gray-700/50 bg-gray-900/90 backdrop-blur-md fixed h-screen w-64 left-0 top-0 z-40">
       <SidebarHeader className="p-6 border-b border-gray-700/30 bg-slate-800">
-        <div className="flex items-center space-x-3">
+        <div 
+          className="flex items-center space-x-3 cursor-pointer hover:bg-gray-800/50 rounded-lg p-2 transition-colors"
+          onClick={handleProfileClick}
+        >
           <div className="relative">
             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-purple-500/30" />
             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900"></div>
