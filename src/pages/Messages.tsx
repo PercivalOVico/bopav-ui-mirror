@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { AppSidebar } from '@/components/AppSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -5,7 +6,6 @@ import { Search, Filter, Archive, Trash2, Reply, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { MainLayout } from "@/components/Layout/MainLayout";
 
 interface Message {
   id: string;
@@ -144,16 +144,11 @@ const Messages = () => {
   };
 
   return (
-    <MainLayout>
-      <div className="h-full flex flex-col">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-white mb-2">Messages</h1>
-          <p className="text-gray-400">Chat with your friends and connections</p>
-        </div>
-
-        {/* Chat Interface */}
-        <div className="flex-1 bg-gray-800/50 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-gray-950">
+        <AppSidebar />
+        
+        <main className="flex-1 flex">
           {/* Messages List */}
           <div className="w-1/3 border-r border-gray-700/50 bg-gray-900/50">
             {/* Header */}
@@ -345,9 +340,9 @@ const Messages = () => {
               </div>
             )}
           </div>
-        </div>
+        </main>
       </div>
-    </MainLayout>
+    </SidebarProvider>
   );
 };
 
