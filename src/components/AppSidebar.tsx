@@ -1,5 +1,5 @@
 
-import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell } from "lucide-react";
+import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -12,6 +12,10 @@ const menuItems = [{
   icon: MessageCircle,
   badge: "6",
   path: "/messages"
+}, {
+  title: "Wallet",
+  icon: Wallet,
+  path: "/wallet"
 }, {
   title: "Forums",
   icon: Calendar,
