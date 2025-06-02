@@ -1,19 +1,21 @@
+
 import { useState } from "react";
 import { MainLayout } from "@/components/Layout/MainLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import Masonry from 'react-masonry-css';
+import { PostCreationInterface } from "@/components/PostCreationInterface";
+import { MasonryPostGrid } from "@/components/MasonryPostGrid";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface Post {
   id: string;
-  author: string;
+  businessName: string;
+  businessAvatar: string;
   content: string;
-  image?: string;
-  comments: Comment[];
+  media: Array<{ url: string; type: string }>;
+  likes: number;
+  comments: number;
+  timeAgo: string;
+  height: number;
 }
 
 interface Comment {
@@ -22,103 +24,6 @@ interface Comment {
   text: string;
 }
 
-const PostCreationInterface = () => {
-  const [postContent, setPostContent] = useState("");
-  const [postImage, setPostImage] = useState<File | null>(null);
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPostContent(e.target.value);
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setPostImage(e.target.files[0]);
-    }
-  };
-
-  const handleSubmit = () => {
-    // Handle post submission logic here
-    console.log("Submitting post with content:", postContent, "and image:", postImage);
-    // Reset state after submission
-    setPostContent("");
-    setPostImage(null);
-  };
-
-  return (
-    <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
-      <CardHeader>
-        <CardTitle className="text-white">Create a Post</CardTitle>
-        <CardDescription className="text-gray-400">Share your thoughts and media with the community.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-2">
-          <Label htmlFor="post">Content</Label>
-          <Textarea
-            id="post"
-            placeholder="Write something..."
-            className="bg-gray-700 text-white"
-            value={postContent}
-            onChange={handleContentChange}
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="image">Image (optional)</Label>
-          <Input
-            id="image"
-            type="file"
-            className="bg-gray-700 text-white file:bg-purple-500 file:border-0 file:text-white"
-            onChange={handleImageChange}
-          />
-        </div>
-        <Button className="w-full bg-purple-600 hover:bg-purple-700" onClick={handleSubmit}>
-          Post
-        </Button>
-      </CardContent>
-    </Card>
-  );
-};
-
-const PostCard = ({ post, onCommentClick }: { post: Post; onCommentClick: (post: Post) => void }) => {
-  return (
-    <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
-      <CardHeader>
-        <CardTitle className="text-white">{post.author}</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-gray-300">{post.content}</p>
-        {post.image && (
-          <img src={post.image} alt="Post" className="w-full rounded-md" />
-        )}
-        <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => onCommentClick(post)}>
-          View Comments
-        </Button>
-      </CardContent>
-    </Card>
-  );
-};
-
-const MasonryPostGrid = ({ posts }: { posts: Post[] }) => {
-  const masonryBreakpoints = {
-    default: 3,
-    1100: 2,
-    700: 1
-  };
-
-  return (
-    <Masonry
-      breakpointCols={masonryBreakpoints}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column"
-    >
-      {posts.map(post => (
-        <div key={post.id}>
-          <PostCard post={post} onCommentClick={(post) => console.log('Clicked on post:', post)} />
-        </div>
-      ))}
-    </Masonry>
-  );
-};
-
 const CommentModal = ({ isOpen, onClose, post }: { isOpen: boolean; onClose: () => void; post: Post | null }) => {
   if (!post) return null;
 
@@ -126,19 +31,10 @@ const CommentModal = ({ isOpen, onClose, post }: { isOpen: boolean; onClose: () 
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-gray-800/90 backdrop-blur-md border border-gray-700/50 text-white">
         <DialogHeader>
-          <DialogTitle>Comments for {post.author}</DialogTitle>
+          <DialogTitle>Comments for {post.businessName}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
-          {post.comments.map(comment => (
-            <Card key={comment.id} className="bg-gray-700/50">
-              <CardHeader>
-                <CardTitle>{comment.author}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-300">{comment.text}</p>
-              </CardContent>
-            </Card>
-          ))}
+          <p className="text-gray-400">No comments yet. Be the first to comment!</p>
         </div>
       </DialogContent>
     </Dialog>
@@ -146,55 +42,72 @@ const CommentModal = ({ isOpen, onClose, post }: { isOpen: boolean; onClose: () 
 };
 
 const Posts = () => {
-  const [posts, setPosts] = useState<Post[]>([
+  const [posts] = useState<Post[]>([
     {
       id: "1",
-      author: "John Doe",
-      content: "This is my first post!",
-      image: "https://images.unsplash.com/photo-1682685797424-99c984583013?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8",
-      comments: [
-        { id: "1", author: "Jane Doe", text: "Great post!" },
-        { id: "2", author: "Jim Smith", text: "I agree!" }
-      ]
+      businessName: "John Doe",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
+      content: "This is my first post! Sharing some amazing content with everyone.",
+      media: [{ url: "https://images.unsplash.com/photo-1682685797424-99c984583013?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8", type: "image" }],
+      likes: 42,
+      comments: 5,
+      timeAgo: "2 hours ago",
+      height: 300,
     },
     {
       id: "2",
-      author: "Jane Doe",
-      content: "Check out this amazing photo!",
-      image: "https://images.unsplash.com/photo-1682622374449-5744991194ca?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8",
-      comments: [
-        { id: "3", author: "John Doe", text: "Wow, beautiful!" },
-        { id: "4", author: "Jim Smith", text: "Where was this taken?" }
-      ]
+      businessName: "Jane Doe",
+      businessAvatar: "https://images.unsplash.com/photo-1494790108755-2616b612b367?w=120&h=120&fit=crop&crop=face",
+      content: "Check out this amazing photo! The colors are absolutely stunning.",
+      media: [{ url: "https://images.unsplash.com/photo-1682622374449-5744991194ca?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8", type: "image" }],
+      likes: 31,
+      comments: 8,
+      timeAgo: "4 hours ago",
+      height: 250,
     },
     {
       id: "3",
-      author: "Jim Smith",
-      content: "Just finished reading a great book. Highly recommend!",
-      comments: [
-        { id: "5", author: "John Doe", text: "What book was it?" },
-        { id: "6", author: "Jane Doe", text: "I'll add it to my list!" }
-      ]
+      businessName: "Jim Smith",
+      businessAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face",
+      content: "Just finished reading a great book. Highly recommend it to anyone interested in personal development!",
+      media: [],
+      likes: 18,
+      comments: 3,
+      timeAgo: "6 hours ago",
+      height: 200,
     },
     {
       id: "4",
-      author: "Alice Johnson",
-      content: "Enjoying a sunny day at the beach!",
-      image: "https://images.unsplash.com/photo-1682586915786-83a75984a45c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8",
-      comments: []
+      businessName: "Alice Johnson",
+      businessAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face",
+      content: "Enjoying a sunny day at the beach! Perfect weather for relaxation.",
+      media: [{ url: "https://images.unsplash.com/photo-1682586915786-83a75984a45c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8", type: "image" }],
+      likes: 65,
+      comments: 12,
+      timeAgo: "1 day ago",
+      height: 320,
     },
     {
       id: "5",
-      author: "Bob Williams",
-      content: "Coding all night long!",
-      comments: []
+      businessName: "Bob Williams",
+      businessAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face",
+      content: "Coding all night long! Working on an exciting new project that I can't wait to share.",
+      media: [],
+      likes: 22,
+      comments: 4,
+      timeAgo: "2 days ago",
+      height: 180,
     },
     {
       id: "6",
-      author: "Charlie Brown",
-      content: "Just adopted a new puppy!",
-      image: "https://images.unsplash.com/photo-1682695797226-9f899e61358a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D",
-      comments: []
+      businessName: "Charlie Brown",
+      businessAvatar: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=120&h=120&fit=crop&crop=face",
+      content: "Just adopted a new puppy! He's absolutely adorable and full of energy.",
+      media: [{ url: "https://images.unsplash.com/photo-1682695797226-9f899e61358a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D", type: "image" }],
+      likes: 89,
+      comments: 16,
+      timeAgo: "3 days ago",
+      height: 280,
     }
   ]);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -203,6 +116,11 @@ const Posts = () => {
   const handleCommentClick = (post: Post) => {
     setSelectedPost(post);
     setIsCommentModalOpen(true);
+  };
+
+  const handlePost = (content: string) => {
+    console.log("New post content:", content);
+    // Handle post creation logic here
   };
 
   return (
@@ -215,10 +133,10 @@ const Posts = () => {
         </div>
 
         {/* Post Creation Interface */}
-        <PostCreationInterface />
+        <PostCreationInterface onPost={handlePost} />
 
         {/* Posts Grid */}
-        <MasonryPostGrid posts={posts} />
+        <MasonryPostGrid posts={posts} loading={false} hasMore={false} />
 
         {/* Comment Modal */}
         <CommentModal
