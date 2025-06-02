@@ -12,39 +12,51 @@ const Profile = () => {
     { label: "Likes", value: "2.1k" },
   ];
 
-  // Mock data for posts
+  // Mock data for posts - updated to match Post interface
   const posts = [
     {
       id: "1",
-      imageUrl: "https://images.unsplash.com/photo-1682687220793-c6265599926a?w=600&dpr=2&q=80",
-      title: "Exploring the Mountains",
-      description: "An amazing hike through the peaks.",
+      businessName: "Bogdan Nikitin",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
+      content: "Exploring the Mountains - An amazing hike through the peaks.",
+      media: [{ url: "https://images.unsplash.com/photo-1682687220793-c6265599926a?w=600&dpr=2&q=80", type: "image" }],
       likes: 42,
       comments: 12,
+      timeAgo: "2 hours ago",
+      height: 300,
     },
     {
       id: "2",
-      imageUrl: "https://images.unsplash.com/photo-1682621745356-b358b3c4984a?w=600&dpr=2&q=80",
-      title: "City at Night",
-      description: "The vibrant city comes alive when the sun sets.",
+      businessName: "Bogdan Nikitin",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
+      content: "City at Night - The vibrant city comes alive when the sun sets.",
+      media: [{ url: "https://images.unsplash.com/photo-1682621745356-b358b3c4984a?w=600&dpr=2&q=80", type: "image" }],
       likes: 31,
       comments: 8,
+      timeAgo: "4 hours ago",
+      height: 250,
     },
     {
       id: "3",
-      imageUrl: "https://images.unsplash.com/photo-1682586915897-4899a7f30979?w=600&dpr=2&q=80",
-      title: "Coffee Time",
-      description: "Enjoying a cup of coffee in a cozy cafe.",
+      businessName: "Bogdan Nikitin",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
+      content: "Coffee Time - Enjoying a cup of coffee in a cozy cafe.",
+      media: [{ url: "https://images.unsplash.com/photo-1682586915897-4899a7f30979?w=600&dpr=2&q=80", type: "image" }],
       likes: 58,
       comments: 22,
+      timeAgo: "6 hours ago",
+      height: 280,
     },
     {
       id: "4",
-      imageUrl: "https://images.unsplash.com/photo-1677601194449-c99658c6917c?w=600&dpr=2&q=80",
-      title: "Beach Vibes",
-      description: "Soaking up the sun on a beautiful beach.",
+      businessName: "Bogdan Nikitin",
+      businessAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
+      content: "Beach Vibes - Soaking up the sun on a beautiful beach.",
+      media: [{ url: "https://images.unsplash.com/photo-1677601194449-c99658c6917c?w=600&dpr=2&q=80", type: "image" }],
       likes: 65,
       comments: 15,
+      timeAgo: "1 day ago",
+      height: 320,
     },
   ];
 
@@ -101,7 +113,7 @@ const Profile = () => {
         {/* Posts */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-6">My Posts</h2>
-          <MasonryPostGrid posts={posts} />
+          <MasonryPostGrid posts={posts} loading={false} hasMore={false} />
         </div>
       </div>
     </MainLayout>
