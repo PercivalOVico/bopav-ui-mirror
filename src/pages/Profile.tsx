@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/Layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import MasonryPostGrid from "@/components/MasonryPostGrid";
+import { MasonryPostGrid } from "@/components/MasonryPostGrid";
 
 const Profile = () => {
   // Mock data for stats
