@@ -1,134 +1,233 @@
+import { useState } from "react";
+import { MainLayout } from "@/components/Layout/MainLayout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Masonry from 'react-masonry-css';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Search, Filter } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/AppSidebar';
-import { RightSidebar } from '@/components/RightSidebar';
-import { PostCreationInterface } from '@/components/PostCreationInterface';
-import { MasonryPostGrid } from '@/components/MasonryPostGrid';
-import { generateSamplePosts } from '@/utils/postUtils';
+interface Post {
+  id: string;
+  author: string;
+  content: string;
+  image?: string;
+  comments: Comment[];
+}
 
-const Posts = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+interface Comment {
+  id: string;
+  author: string;
+  text: string;
+}
 
-  // Initialize with first batch of posts
-  useEffect(() => {
-    setPosts(generateSamplePosts(0, 12));
-  }, []);
+const PostCreationInterface = () => {
+  const [postContent, setPostContent] = useState("");
+  const [postImage, setPostImage] = useState<File | null>(null);
 
-  // Load more posts function
-  const loadMorePosts = useCallback(() => {
-    if (loading || !hasMore) return;
-    
-    setLoading(true);
-    
-    // Simulate API call delay
-    setTimeout(() => {
-      const newPosts = generateSamplePosts(posts.length, 8);
-      setPosts(prev => [...prev, ...newPosts]);
-      setLoading(false);
-      
-      // Stop infinite scroll after 50 posts for demo
-      if (posts.length >= 42) {
-        setHasMore(false);
-      }
-    }, 1000);
-  }, [posts.length, loading, hasMore]);
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostContent(e.target.value);
+  };
 
-  // Infinite scroll handler for center content only
-  useEffect(() => {
-    const handleScroll = (e) => {
-      const element = e.target;
-      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-        loadMorePosts();
-      }
-    };
-
-    const centerContent = document.getElementById('center-content');
-    if (centerContent) {
-      centerContent.addEventListener('scroll', handleScroll);
-      return () => centerContent.removeEventListener('scroll', handleScroll);
-    }
-  }, [loadMorePosts]);
-
-  const filteredPosts = posts.filter(post =>
-    post.businessName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.content.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handlePost = (content: string) => {
-    if (content.trim()) {
-      console.log('Posting:', content);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setPostImage(e.target.files[0]);
     }
   };
 
+  const handleSubmit = () => {
+    // Handle post submission logic here
+    console.log("Submitting post with content:", postContent, "and image:", postImage);
+    // Reset state after submission
+    setPostContent("");
+    setPostImage(null);
+  };
+
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
-        {/* Left Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block w-64 fixed left-0 top-0 h-full">
-          <AppSidebar />
+    <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
+      <CardHeader>
+        <CardTitle className="text-white">Create a Post</CardTitle>
+        <CardDescription className="text-gray-400">Share your thoughts and media with the community.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid gap-2">
+          <Label htmlFor="post">Content</Label>
+          <Textarea
+            id="post"
+            placeholder="Write something..."
+            className="bg-gray-700 text-white"
+            value={postContent}
+            onChange={handleContentChange}
+          />
         </div>
-        
-        {/* Center content with responsive margins */}
-        <div className="flex-1 lg:ml-64 lg:mr-80 mx-0">
-          {/* Sticky Header with Post Creation and Search */}
-          <div className="sticky top-0 z-50 bg-gradient-to-br from-gray-900/95 via-purple-900/95 to-violet-900/95 backdrop-blur-md border-b border-gray-700/50">
-            <div className="px-4 lg:px-6 py-4">
-              <div className="max-w-4xl mx-auto space-y-4">
-                {/* Post Creation Interface */}
-                <PostCreationInterface onPost={handlePost} />
+        <div className="grid gap-2">
+          <Label htmlFor="image">Image (optional)</Label>
+          <Input
+            id="image"
+            type="file"
+            className="bg-gray-700 text-white file:bg-purple-500 file:border-0 file:text-white"
+            onChange={handleImageChange}
+          />
+        </div>
+        <Button className="w-full bg-purple-600 hover:bg-purple-700" onClick={handleSubmit}>
+          Post
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
 
-                {/* Search and Filter */}
-                <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search businesses or content..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 rounded-full backdrop-blur-sm"
-                    />
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-full px-6 backdrop-blur-sm"
-                  >
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filter
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+const PostCard = ({ post, onCommentClick }: { post: Post; onCommentClick: (post: Post) => void }) => {
+  return (
+    <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
+      <CardHeader>
+        <CardTitle className="text-white">{post.author}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <p className="text-gray-300">{post.content}</p>
+        {post.image && (
+          <img src={post.image} alt="Post" className="w-full rounded-md" />
+        )}
+        <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => onCommentClick(post)}>
+          View Comments
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
 
-          {/* Scrollable Content */}
-          <div 
-            id="center-content"
-            className="h-screen overflow-y-auto px-4 lg:px-6 py-6"
-            style={{ paddingTop: '0' }}
-          >
-            <div className="max-w-4xl mx-auto">
-              <MasonryPostGrid 
-                posts={filteredPosts}
-                loading={loading}
-                hasMore={hasMore}
-              />
-            </div>
-          </div>
+const MasonryPostGrid = ({ posts }: { posts: Post[] }) => {
+  const masonryBreakpoints = {
+    default: 3,
+    1100: 2,
+    700: 1
+  };
+
+  return (
+    <Masonry
+      breakpointCols={masonryBreakpoints}
+      className="my-masonry-grid"
+      columnClassName="my-masonry-grid_column"
+    >
+      {posts.map(post => (
+        <div key={post.id}>
+          <PostCard post={post} onCommentClick={(post) => console.log('Clicked on post:', post)} />
         </div>
-        
-        {/* Right Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block w-80 fixed right-0 top-0 h-full">
-          <RightSidebar />
+      ))}
+    </Masonry>
+  );
+};
+
+const CommentModal = ({ isOpen, onClose, post }: { isOpen: boolean; onClose: () => void; post: Post | null }) => {
+  if (!post) return null;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="bg-gray-800/90 backdrop-blur-md border border-gray-700/50 text-white">
+        <DialogHeader>
+          <DialogTitle>Comments for {post.author}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          {post.comments.map(comment => (
+            <Card key={comment.id} className="bg-gray-700/50">
+              <CardHeader>
+                <CardTitle>{comment.author}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">{comment.text}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const Posts = () => {
+  const [posts, setPosts] = useState<Post[]>([
+    {
+      id: "1",
+      author: "John Doe",
+      content: "This is my first post!",
+      image: "https://images.unsplash.com/photo-1682685797424-99c984583013?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8",
+      comments: [
+        { id: "1", author: "Jane Doe", text: "Great post!" },
+        { id: "2", author: "Jim Smith", text: "I agree!" }
+      ]
+    },
+    {
+      id: "2",
+      author: "Jane Doe",
+      content: "Check out this amazing photo!",
+      image: "https://images.unsplash.com/photo-1682622374449-5744991194ca?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8",
+      comments: [
+        { id: "3", author: "John Doe", text: "Wow, beautiful!" },
+        { id: "4", author: "Jim Smith", text: "Where was this taken?" }
+      ]
+    },
+    {
+      id: "3",
+      author: "Jim Smith",
+      content: "Just finished reading a great book. Highly recommend!",
+      comments: [
+        { id: "5", author: "John Doe", text: "What book was it?" },
+        { id: "6", author: "Jane Doe", text: "I'll add it to my list!" }
+      ]
+    },
+    {
+      id: "4",
+      author: "Alice Johnson",
+      content: "Enjoying a sunny day at the beach!",
+      image: "https://images.unsplash.com/photo-1682586915786-83a75984a45c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8",
+      comments: []
+    },
+    {
+      id: "5",
+      author: "Bob Williams",
+      content: "Coding all night long!",
+      comments: []
+    },
+    {
+      id: "6",
+      author: "Charlie Brown",
+      content: "Just adopted a new puppy!",
+      image: "https://images.unsplash.com/photo-1682695797226-9f899e61358a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D",
+      comments: []
+    }
+  ]);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
+  const handleCommentClick = (post: Post) => {
+    setSelectedPost(post);
+    setIsCommentModalOpen(true);
+  };
+
+  return (
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">News Feed</h1>
+          <p className="text-gray-400">Stay updated with the latest posts</p>
+        </div>
+
+        {/* Post Creation Interface */}
+        <PostCreationInterface />
+
+        {/* Posts Grid */}
+        <MasonryPostGrid posts={posts} />
+
+        {/* Comment Modal */}
+        <CommentModal
+          isOpen={isCommentModalOpen}
+          onClose={() => setIsCommentModalOpen(false)}
+          post={selectedPost}
+        />
       </div>
-    </SidebarProvider>
+    </MainLayout>
   );
 };
 
