@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MainLayout } from '@/components/Layout/MainLayout';
 import { useToast } from '@/hooks/use-toast';
-import { Calendar, Clock, User, Phone, Mail, CreditCard, X, MessageCircle } from 'lucide-react';
+import { Calendar, Clock, User, Phone, Mail, CreditCard, X, MessageCircle, ShoppingCart } from 'lucide-react';
 
 interface CartItem {
   id: string;
