@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { MainLayout } from "@/components/Layout/MainLayout";
@@ -7,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookingModal } from "@/components/BookingModal";
+import { useToast } from "@/hooks/use-toast";
 import { 
   MapPin, 
   Star, 
@@ -24,6 +25,7 @@ const UserProfile = () => {
   const { userId } = useParams();
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const { toast } = useToast();
 
   // Mock user data - in real app this would come from API
   const userData = {
@@ -67,10 +69,22 @@ const UserProfile = () => {
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
+    toast({
+      title: isFollowing ? "Unfollowed" : "Following",
+      description: isFollowing 
+        ? `You are no longer following ${userData.name}` 
+        : `You are now following ${userData.name}`,
+    });
   };
 
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
+    toast({
+      title: isFavorited ? "Removed from favorites" : "Added to favorites",
+      description: isFavorited 
+        ? `${userData.name} removed from your favorites` 
+        : `${userData.name} added to your favorites`,
+    });
   };
 
   const handleBookAppointment = () => {
@@ -78,7 +92,18 @@ const UserProfile = () => {
   };
 
   const handleMessage = () => {
+    toast({
+      title: "Message sent",
+      description: `Opening conversation with ${userData.name}`,
+    });
     console.log("Opening message to:", userData.name);
+  };
+
+  const handleShare = () => {
+    toast({
+      title: "Profile shared",
+      description: "Profile link copied to clipboard",
+    });
   };
 
   return (
@@ -163,13 +188,17 @@ const UserProfile = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3 mt-6">
-              <Button 
-                onClick={handleBookAppointment}
-                className="flex-1 bg-purple-600 hover:bg-purple-700"
+              <BookingModal
+                serviceName="General Appointment"
+                servicePrice="$50"
+                serviceDuration="60 min"
+                businessName={userData.name}
               >
-                <Calendar className="h-4 w-4 mr-2" />
-                Book Appointment
-              </Button>
+                <Button className="flex-1 bg-purple-600 hover:bg-purple-700">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Book Appointment
+                </Button>
+              </BookingModal>
               <Button 
                 variant="outline" 
                 onClick={handleMessage}
@@ -181,6 +210,7 @@ const UserProfile = () => {
               <Button 
                 variant="outline" 
                 size="icon"
+                onClick={handleShare}
                 className="border-gray-600 text-gray-400 hover:bg-gray-700"
               >
                 <Share className="h-4 w-4" />
@@ -215,13 +245,19 @@ const UserProfile = () => {
                         <Clock className="h-3 w-3" />
                         <span>{service.duration}</span>
                       </div>
-                      <Button 
-                        size="sm" 
-                        className="w-full mt-3 bg-purple-600 hover:bg-purple-700"
-                        onClick={handleBookAppointment}
+                      <BookingModal
+                        serviceName={service.name}
+                        servicePrice={service.price}
+                        serviceDuration={service.duration}
+                        businessName={userData.name}
                       >
-                        Book Now
-                      </Button>
+                        <Button 
+                          size="sm" 
+                          className="w-full mt-3 bg-purple-600 hover:bg-purple-700"
+                        >
+                          Book Now
+                        </Button>
+                      </BookingModal>
                     </CardContent>
                   </Card>
                 ))}

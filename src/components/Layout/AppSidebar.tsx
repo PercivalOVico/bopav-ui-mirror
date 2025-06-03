@@ -1,7 +1,8 @@
 
-import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader } from "@/components/ui/sidebar";
+import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet, LogOut } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [{
   title: "News Feed",
@@ -38,6 +39,7 @@ const menuItems = [{
 export function AppSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
 
   const handleNavigation = (path: string) => {
     if (path !== "#") {
@@ -47,6 +49,14 @@ export function AppSidebar() {
 
   const handleProfileClick = () => {
     navigate("/profile");
+  };
+
+  const handleSignOut = () => {
+    toast({
+      title: "Signed out successfully",
+      description: "You have been logged out of your account.",
+    });
+    navigate("/");
   };
 
   return (
@@ -98,6 +108,22 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="p-4 border-t border-gray-700/30">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              onClick={handleSignOut}
+              className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200 rounded-xl cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <LogOut className="h-5 w-5" />
+                <span className="font-medium">Sign Out</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
