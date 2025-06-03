@@ -1,5 +1,4 @@
-
-import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet, LogOut } from "lucide-react";
+import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet, LogOut, ShoppingCart } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -13,6 +12,11 @@ const menuItems = [{
   icon: MessageCircle,
   badge: "6",
   path: "/messages"
+}, {
+  title: "Cart",
+  icon: ShoppingCart,
+  badge: "2",
+  path: "/cart"
 }, {
   title: "Wallet",
   icon: Wallet,
