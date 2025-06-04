@@ -1,11 +1,10 @@
 
 import { Search, ShoppingCart, Home, Plus, Wallet } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
 
 export const MobileBottomNav = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [location, navigate] = useLocation();
 
   const navItems = [
     {
@@ -44,9 +43,9 @@ export const MobileBottomNav = () => {
 
   const isActive = (path: string) => {
     if (path === "/") {
-      return location.pathname === "/";
+      return location === "/";
     }
-    return location.pathname.startsWith(path);
+    return location.startsWith(path);
   };
 
   return (
