@@ -4,6 +4,7 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/Layout/AppSidebar';
 import { RightSidebar } from '@/components/Layout/RightSidebar';
 import { MobileNav } from '@/components/Layout/MobileNav';
+import { MobileBottomNav } from '@/components/Layout/MobileBottomNav';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -22,8 +23,8 @@ export const MainLayout = ({ children, showRightSidebar = true }: MainLayoutProp
           <AppSidebar />
         </div>
         
-        {/* Center content with responsive margins */}
-        <div className={`flex-1 lg:ml-64 ${showRightSidebar ? 'lg:mr-80' : ''} mx-0 pt-16 lg:pt-0`}>
+        {/* Center content with responsive margins and bottom padding for mobile nav */}
+        <div className={`flex-1 lg:ml-64 ${showRightSidebar ? 'lg:mr-80' : ''} mx-0 pt-16 lg:pt-0 pb-20 lg:pb-0`}>
           {children}
         </div>
         
@@ -33,6 +34,9 @@ export const MainLayout = ({ children, showRightSidebar = true }: MainLayoutProp
             <RightSidebar />
           </div>
         )}
+        
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
       </div>
     </SidebarProvider>
   );
