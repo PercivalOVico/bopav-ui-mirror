@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 
 interface MasonryPostCardProps {
@@ -25,7 +25,7 @@ export const MasonryPostCard = ({
   height,
   onCommentClick
 }: MasonryPostCardProps) => {
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
