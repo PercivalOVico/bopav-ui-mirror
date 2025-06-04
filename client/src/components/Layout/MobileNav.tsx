@@ -2,11 +2,11 @@
 import { MessageCircle, Bell, MoreVertical, Settings, HelpCircle, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
 export const MobileNav = () => {
-  const navigate = useNavigate();
+  const [location, navigate] = useLocation();
   const { toast } = useToast();
 
   const handleProfileClick = () => {
