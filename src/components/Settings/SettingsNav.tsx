@@ -1,5 +1,5 @@
 
-import { Search, List, Cube, Briefcase, HelpCircle, FileText, Shield, Cookie, Users, Eye, User, UserPlus, MessageSquare, Camera, Film, Plus, Tag, UserX, CreditCard, ShieldCheck, Home, Settings, Smile, Bell, Accessibility, Globe, Image, Moon } from 'lucide-react';
+import { Search, List, Box, Briefcase, HelpCircle, FileText, Shield, Cookie, Users, Eye, User, UserPlus, MessageSquare, Camera, Film, Plus, Tag, UserX, CreditCard, ShieldCheck, Home, Settings, Smile, Bell, Accessibility, Globe, Image, Moon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { SettingsSection } from '@/pages/Settings';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ export const SettingsNav = ({ activeSection, onSectionChange }: SettingsNavProps
       description: "Review your activity and content you're tagged in.",
       items: [
         { id: 'activity-log' as SettingsSection, label: 'Activity log', icon: List },
-        { id: 'apps-websites' as SettingsSection, label: 'Apps and websites', icon: Cube },
+        { id: 'apps-websites' as SettingsSection, label: 'Apps and websites', icon: Box },
         { id: 'business-integrations' as SettingsSection, label: 'Business integrations', icon: Briefcase },
         { id: 'manage-info' as SettingsSection, label: 'Learn how to manage your information', icon: HelpCircle },
         { id: 'reactivate-page' as SettingsSection, label: 'Reactivate a Page', icon: FileText },
