@@ -216,7 +216,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map(item => {
-                const isActive = location.pathname === item.path;
+                const isActive = location === item.path;
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
