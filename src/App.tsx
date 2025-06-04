@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import UserProfile from "./pages/UserProfile";
 import Wallet from "./pages/Wallet";
 import Cart from "./pages/Cart";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/user/:userId" element={<UserProfile />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

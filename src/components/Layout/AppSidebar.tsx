@@ -1,3 +1,4 @@
+
 import { Calendar, Home, MessageCircle, Users, Image, Settings, Bell, Wallet, LogOut, ShoppingCart } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -37,7 +38,7 @@ const menuItems = [{
 }, {
   title: "Settings",
   icon: Settings,
-  path: "#"
+  path: "/settings"
 }];
 
 export function AppSidebar() {
