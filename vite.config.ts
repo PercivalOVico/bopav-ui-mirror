@@ -23,5 +23,10 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "../dist/public",
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "client/index.html"),
+      },
+    },
   },
 }));
