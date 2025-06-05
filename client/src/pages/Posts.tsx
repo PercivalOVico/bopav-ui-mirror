@@ -5,9 +5,21 @@ import { PostHeader } from '@/components/Posts/PostHeader';
 import { PostContent } from '@/components/Posts/PostContent';
 import { generateSamplePosts } from '@/utils/postUtils';
 
+interface Post {
+  id: string;
+  businessName: string;
+  businessAvatar: string;
+  content: string;
+  media: Array<{ url: string; type: string }>;
+  likes: number;
+  comments: number;
+  timeAgo: string;
+  height: number;
+}
+
 const Posts = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -37,8 +49,8 @@ const Posts = () => {
 
   // Infinite scroll handler for center content only
   useEffect(() => {
-    const handleScroll = (e) => {
-      const element = e.target;
+    const handleScroll = (e: Event) => {
+      const element = e.target as HTMLElement;
       if (element.scrollHeight - element.scrollTop === element.clientHeight) {
         loadMorePosts();
       }
