@@ -1,8 +1,7 @@
-
 import { Search, Filter } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { PostCreationInterface } from '@/components/Posts/PostCreationInterface';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { PostCreationInterface } from './PostCreationInterface';
 
 interface PostHeaderProps {
   searchTerm: string;

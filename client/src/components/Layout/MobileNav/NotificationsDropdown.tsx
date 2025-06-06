@@ -1,8 +1,7 @@
-
 import { Bell } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { Badge } from "../../ui/badge";
+import { useToast } from "../../../hooks/use-toast";
 
 export const NotificationsDropdown = () => {
   const { toast } = useToast();
