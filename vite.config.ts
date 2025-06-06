@@ -23,9 +23,14 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "../dist/public",
     emptyOutDir: true,
+    sourcemap: false,
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, "client/index.html"),
+      input: path.resolve(__dirname, "client/index.html"),
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-slot', '@radix-ui/react-toast'],
+        },
       },
     },
   },
