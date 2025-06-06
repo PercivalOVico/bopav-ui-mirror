@@ -1,8 +1,9 @@
+
 import { useState, useEffect, useCallback } from 'react';
-import { MainLayout } from '../components/Layout/MainLayout';
-import { PostHeader } from '../components/Posts/PostHeader';
-import { PostContent } from '../components/Posts/PostContent';
-import { generateSamplePosts } from '../utils/postUtils';
+import { MainLayout } from '@/components/Layout/MainLayout';
+import { PostHeader } from '@/components/Posts/PostHeader';
+import { PostContent } from '@/components/Posts/PostContent';
+import { generateSamplePosts } from '@/utils/postUtils';
 
 interface Post {
   id: string;

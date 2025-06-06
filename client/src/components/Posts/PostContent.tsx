@@ -1,4 +1,5 @@
-import { MasonryPostGrid } from '../MasonryPostGrid';
+
+import { MasonryPostGrid } from '@/components/MasonryPostGrid';
 
 interface Post {
   id: string;

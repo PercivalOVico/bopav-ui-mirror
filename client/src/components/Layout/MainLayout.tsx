@@ -1,9 +1,10 @@
+
 import { ReactNode } from 'react';
-import { SidebarProvider } from '../ui/sidebar';
-import { AppSidebar } from './AppSidebar';
-import { RightSidebar } from './RightSidebar';
-import { MobileNav } from './MobileNav';
-import { MobileBottomNav } from './MobileBottomNav';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/Layout/AppSidebar';
+import { RightSidebar } from '@/components/Layout/RightSidebar';
+import { MobileNav } from '@/components/Layout/MobileNav';
+import { MobileBottomNav } from '@/components/Layout/MobileBottomNav';
 
 interface MainLayoutProps {
   children: ReactNode;

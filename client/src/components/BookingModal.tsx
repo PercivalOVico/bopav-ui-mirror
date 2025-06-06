@@ -1,10 +1,11 @@
+
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar";
-import { Card, CardContent } from "./ui/card";
-import { Textarea } from "./ui/textarea";
-import { useToast } from "../hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { Calendar as CalendarIcon, Clock, User } from "lucide-react";
 
 interface BookingModalProps {

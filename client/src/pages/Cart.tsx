@@ -1,11 +1,12 @@
+
 import { useState } from 'react';
-import { TabsContent } from '../components/ui/tabs';
-import { MainLayout } from '../components/Layout/MainLayout';
-import { useToast } from '../hooks/use-toast';
-import { CartItem } from '../components/Cart/CartItem';
-import { CartFilters } from '../components/Cart/CartFilters';
-import { CartItemsList } from '../components/Cart/CartItemsList';
-import { CartSummary } from '../components/Cart/CartSummary';
+import { TabsContent } from '@/components/ui/tabs';
+import { MainLayout } from '@/components/Layout/MainLayout';
+import { useToast } from '@/hooks/use-toast';
+import { CartItem } from '@/components/Cart/CartItem';
+import { CartFilters } from '@/components/Cart/CartFilters';
+import { CartItemsList } from '@/components/Cart/CartItemsList';
+import { CartSummary } from '@/components/Cart/CartSummary';
 
 const Cart = () => {
   const { toast } = useToast();

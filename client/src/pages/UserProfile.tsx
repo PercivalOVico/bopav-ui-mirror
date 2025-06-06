@@ -1,14 +1,13 @@
-
 import { useState } from "react";
 import { useParams } from "wouter";
-import { MainLayout } from "../components/Layout/MainLayout";
-import { Button } from "../components/ui/button";
-import { Card, CardContent } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "../components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { BookingModal } from "../components/BookingModal";
-import { useToast } from "../hooks/use-toast";
+import { MainLayout } from "@/components/Layout/MainLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookingModal } from "@/components/BookingModal";
+import { useToast } from "@/hooks/use-toast";
 import { 
   MapPin, 
   Star, 

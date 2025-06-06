@@ -1,6 +1,6 @@
 
-import { MasonryPostCard } from './MasonryPostCard';
-import { CommentModal } from './CommentModal';
+import { MasonryPostCard } from '@/components/MasonryPostCard';
+import { CommentModal } from '@/components/CommentModal';
 import { useState } from 'react';
 
 interface Post {
