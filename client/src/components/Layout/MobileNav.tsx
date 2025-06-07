@@ -1,8 +1,7 @@
-
-import { MessagesDropdown } from "./MobileNav/MessagesDropdown";
-import { NotificationsDropdown } from "./MobileNav/NotificationsDropdown";
-import { MenuDropdown } from "./MobileNav/MenuDropdown";
-import { UserProfileDropdown } from "./MobileNav/UserProfileDropdown";
+import { MessagesDropdown } from "@/components/Layout/MobileNav/MessagesDropdown";
+import { NotificationsDropdown } from "@/components/Layout/MobileNav/NotificationsDropdown";
+import { MenuDropdown } from "@/components/Layout/MobileNav/MenuDropdown";
+import { UserProfileDropdown } from "@/components/Layout/MobileNav/UserProfileDropdown";
 
 export const MobileNav = () => {
   return (

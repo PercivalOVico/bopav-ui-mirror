@@ -1,6 +1,7 @@
 
-import { Search, ShoppingCart, Home, Plus, Wallet } from "lucide-react";
 import { useLocation } from "wouter";
+import { Search, ShoppingCart, Home, Plus, Wallet } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 
 export const MobileBottomNav = () => {

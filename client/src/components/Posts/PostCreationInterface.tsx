@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Smile, MapPin, Image as ImageIcon, Video, Send } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';

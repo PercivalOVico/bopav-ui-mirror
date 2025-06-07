@@ -1,5 +1,6 @@
 
 import { ReactNode } from 'react';
+
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/Layout/AppSidebar';
 import { RightSidebar } from '@/components/Layout/RightSidebar';
