@@ -1,5 +1,5 @@
+
 import { useState } from 'react';
-import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 
 interface MasonryPostCardProps {
@@ -25,7 +25,6 @@ export const MasonryPostCard = ({
   height,
   onCommentClick
 }: MasonryPostCardProps) => {
-  const [, navigate] = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -46,12 +45,6 @@ export const MasonryPostCard = ({
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
-  };
-
-  const handleUserClick = () => {
-    // Generate a user ID from business name for demo purposes
-    const userId = businessName.toLowerCase().replace(/\s+/g, '-');
-    navigate(`/user/${userId}`);
   };
 
   const nextMedia = () => {
@@ -217,21 +210,16 @@ export const MasonryPostCard = ({
 
       {/* Content */}
       <div className="p-4">
-        {/* Business Header - Made clickable */}
+        {/* Business Header */}
         <div className="flex items-center space-x-3 mb-3">
-          <div 
-            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={handleUserClick}
-          >
-            <img
-              src={businessAvatar}
-              alt={businessName}
-              className="w-8 h-8 rounded-full object-cover border-2 border-purple-500/30"
-            />
-            <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold text-white truncate hover:text-purple-400 transition-colors">{businessName}</h3>
-              <p className="text-xs text-gray-400">{timeAgo}</p>
-            </div>
+          <img
+            src={businessAvatar}
+            alt={businessName}
+            className="w-8 h-8 rounded-full object-cover border-2 border-purple-500/30"
+          />
+          <div className="flex-1 min-w-0">
+            <h3 className="text-sm font-semibold text-white truncate">{businessName}</h3>
+            <p className="text-xs text-gray-400">{timeAgo}</p>
           </div>
         </div>
 
