@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const stories = [{
   name: "Anatoly Pr...",
@@ -40,32 +41,38 @@ const recommendations = [{
 
 export function RightSidebar() {
   return (
-    <div className="w-80 bg-gray-900/90 backdrop-blur-md p-6 space-y-6 border-l border-gray-700/50 fixed right-0 top-0 h-screen overflow-hidden z-40 rounded-none">
-      {/* Stories Section */}
-      <div>
-        <h3 className="text-white font-semibold text-lg mb-4">Stories</h3>
-        <div className="flex space-x-3">
-          {stories.map((story, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <div className="relative">
-                <img src={story.image} alt={story.name} className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/50" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+    <div className="w-80 bg-gray-900/90 backdrop-blur-md p-6 space-y-6 border-l border-gray-700/50 fixed right-0 top-0 h-screen overflow-y-auto z-40 rounded-none">
+      {/* Stories Card */}
+      <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-white text-lg">Stories</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex space-x-3">
+            {stories.map((story, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <div className="relative">
+                  <img src={story.image} alt={story.name} className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/50" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+                </div>
+                <span className="text-white text-xs mt-2 text-center">{story.name}</span>
               </div>
-              <span className="text-white text-xs mt-2 text-center">{story.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Suggestions Section */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-white font-semibold text-lg">Suggestions</h3>
-          <Button variant="ghost" className="text-gray-400 hover:text-white text-sm p-0">
-            See all
-          </Button>
-        </div>
-        <div className="space-y-3">
+      {/* Suggestions Card */}
+      <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-white text-lg">Suggestions</CardTitle>
+            <Button variant="ghost" className="text-gray-400 hover:text-white text-sm p-0">
+              See all
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-3">
           {suggestions.map((user, index) => (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -77,21 +84,25 @@ export function RightSidebar() {
               </Button>
             </div>
           ))}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      {/* Recommendations Section */}
-      <div>
-        <h3 className="text-white font-semibold text-lg mb-4">Recommendations</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {recommendations.map((item, index) => (
-            <div key={index} className={`${item.color} p-4 rounded-2xl text-white text-center hover:scale-105 transition-transform cursor-pointer`}>
-              <div className="text-2xl mb-2">{item.icon}</div>
-              <span className="font-medium text-sm">{item.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Recommendations Card */}
+      <Card className="bg-gray-800/50 backdrop-blur-md border border-gray-700/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-white text-lg">Recommendations</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-3">
+            {recommendations.map((item, index) => (
+              <div key={index} className={`${item.color} p-4 rounded-2xl text-white text-center hover:scale-105 transition-transform cursor-pointer`}>
+                <div className="text-2xl mb-2">{item.icon}</div>
+                <span className="font-medium text-sm">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

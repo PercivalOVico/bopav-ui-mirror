@@ -1,8 +1,8 @@
-import { useState } from 'react';
 
 import { MainLayout } from '@/components/Layout/MainLayout';
 import { SettingsNav } from '@/components/Settings/SettingsNav';
 import { SettingsContent } from '@/components/Settings/SettingsContent';
+import { useState } from 'react';
 
 export type SettingsSection = 
   | 'activity-log'
