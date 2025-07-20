@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { AppSidebar } from '@/components/AppSidebar';
+import { AppSidebar } from '@/components/Layout/AppSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Search, Filter, Archive, Trash2, Reply, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';

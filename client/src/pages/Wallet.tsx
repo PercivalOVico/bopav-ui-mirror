@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { AppSidebar } from "@/components/AppSidebar";
-import { RightSidebar } from "@/components/RightSidebar";
+import { AppSidebar } from "@/components/Layout/AppSidebar";
+import { RightSidebar } from "@/components/Layout/RightSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
