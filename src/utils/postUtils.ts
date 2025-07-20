@@ -1,5 +1,7 @@
 
-export const generateSamplePosts = (startId: number, count: number) => {
+import type { Post, MediaItem } from '@/types';
+
+export const generateSamplePosts = (startId: number, count: number): Post[] => {
   const businesses = [
     {
       name: 'TechFlow Solutions',
@@ -52,12 +54,12 @@ export const generateSamplePosts = (startId: number, count: number) => {
     
     // Generate 1-4 media items per post
     const mediaCount = Math.floor(Math.random() * 4) + 1;
-    const media = Array.from({ length: mediaCount }, (_, mediaIndex) => {
+    const media: MediaItem[] = Array.from({ length: mediaCount }, (_, mediaIndex) => {
       const itemIndex = (startId + i + mediaIndex) % mediaItems.length;
       return {
         url: mediaItems[itemIndex],
         type: Math.random() > 0.3 ? 'image' : 'video'
-      };
+      } as MediaItem;
     });
     
     return {

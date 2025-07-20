@@ -1,12 +1,13 @@
 
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
+import type { MediaItem } from '@/types';
 
 interface MasonryPostCardProps {
   businessName: string;
   businessAvatar: string;
   content: string;
-  media: Array<{ url: string; type: string }>;
+  media: MediaItem[];
   likes: number;
   comments: number;
   timeAgo: string;
@@ -14,7 +15,7 @@ interface MasonryPostCardProps {
   onCommentClick?: () => void;
 }
 
-export const MasonryPostCard = ({
+export const MasonryPostCard = React.memo(({
   businessName,
   businessAvatar,
   content,
@@ -34,18 +35,18 @@ export const MasonryPostCard = ({
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
 
-  const handleLike = () => {
+  const handleLike = useCallback(() => {
     setIsLiked(!isLiked);
     setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
-  };
+  }, [isLiked, likesCount]);
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     setIsSaved(!isSaved);
-  };
+  }, [isSaved]);
 
-  const handleFollow = () => {
+  const handleFollow = useCallback(() => {
     setIsFollowing(!isFollowing);
-  };
+  }, [isFollowing]);
 
   const nextMedia = () => {
     setCurrentMediaIndex((prev) => (prev + 1) % media.length);
@@ -281,4 +282,6 @@ export const MasonryPostCard = ({
       </div>
     </div>
   );
-};
+});
+
+MasonryPostCard.displayName = 'MasonryPostCard';

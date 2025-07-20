@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Smile, MapPin, Image as ImageIcon, Video, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,15 +9,15 @@ interface PostCreationInterfaceProps {
   onPost: (content: string) => void;
 }
 
-export const PostCreationInterface = ({ onPost }: PostCreationInterfaceProps) => {
+export const PostCreationInterface = React.memo(({ onPost }: PostCreationInterfaceProps) => {
   const [postContent, setPostContent] = useState('');
 
-  const handlePost = () => {
+  const handlePost = useCallback(() => {
     if (postContent.trim()) {
       onPost(postContent);
       setPostContent('');
     }
-  };
+  }, [postContent, onPost]);
 
   return (
     <div className="bg-gray-800/40 backdrop-blur-md rounded-2xl p-4 border border-gray-700/50">
@@ -79,4 +79,6 @@ export const PostCreationInterface = ({ onPost }: PostCreationInterfaceProps) =>
       </div>
     </div>
   );
-};
+});
+
+PostCreationInterface.displayName = 'PostCreationInterface';

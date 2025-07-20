@@ -1,19 +1,8 @@
 
+import React, { useState } from 'react';
 import { MasonryPostCard } from '@/components/MasonryPostCard';
 import { CommentModal } from '@/components/CommentModal';
-import { useState } from 'react';
-
-interface Post {
-  id: string;
-  businessName: string;
-  businessAvatar: string;
-  content: string;
-  media: Array<{ url: string; type: string }>;
-  likes: number;
-  comments: number;
-  timeAgo: string;
-  height: number;
-}
+import type { Post } from '@/types';
 
 interface MasonryPostGridProps {
   posts: Post[];
@@ -21,7 +10,7 @@ interface MasonryPostGridProps {
   hasMore: boolean;
 }
 
-export const MasonryPostGrid = ({ posts, loading, hasMore }: MasonryPostGridProps) => {
+export const MasonryPostGrid = React.memo(({ posts, loading, hasMore }: MasonryPostGridProps) => {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleCommentClick = (post: Post) => {
@@ -73,4 +62,6 @@ export const MasonryPostGrid = ({ posts, loading, hasMore }: MasonryPostGridProp
       )}
     </>
   );
-};
+});
+
+MasonryPostGrid.displayName = 'MasonryPostGrid';
