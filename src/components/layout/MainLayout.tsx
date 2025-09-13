@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { RightSidebar } from '@/components/RightSidebar';
@@ -10,22 +11,42 @@ interface MainLayoutProps {
 export const MainLayout = React.memo(({ children }: MainLayoutProps) => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
+      <motion.div 
+        className="min-h-screen flex w-full bg-gradient-to-br from-background via-accent/5 to-primary/5"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         {/* Left Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block w-64 fixed left-0 top-0 h-full">
+        <motion.div 
+          className="hidden lg:block w-64 fixed left-0 top-0 h-full z-40"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
           <AppSidebar />
-        </div>
+        </motion.div>
         
         {/* Center content with responsive margins */}
-        <div className="flex-1 lg:ml-64 lg:mr-80 mx-0">
+        <motion.div 
+          className="flex-1 lg:ml-64 lg:mr-80 mx-0"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           {children}
-        </div>
+        </motion.div>
         
         {/* Right Sidebar - Hidden on mobile */}
-        <div className="hidden lg:block w-80 fixed right-0 top-0 h-full">
+        <motion.div 
+          className="hidden lg:block w-80 fixed right-0 top-0 h-full z-40"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        >
           <RightSidebar />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </SidebarProvider>
   );
 });

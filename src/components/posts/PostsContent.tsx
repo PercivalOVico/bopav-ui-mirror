@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { MasonryPostGrid } from '@/components/MasonryPostGrid';
 import type { Post } from '@/types';
 
@@ -10,10 +11,13 @@ interface PostsContentProps {
 
 export const PostsContent = React.memo(({ posts, loading, hasMore }: PostsContentProps) => {
   return (
-    <div 
+    <motion.div 
       id="center-content"
       className="h-screen overflow-y-auto px-4 lg:px-6 py-6"
       style={{ paddingTop: '0' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2 }}
     >
       <div className="max-w-4xl mx-auto">
         <MasonryPostGrid 
@@ -22,7 +26,7 @@ export const PostsContent = React.memo(({ posts, loading, hasMore }: PostsConten
           hasMore={hasMore}
         />
       </div>
-    </div>
+    </motion.div>
   );
 });
 

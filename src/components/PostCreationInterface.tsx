@@ -1,7 +1,8 @@
 
 import React, { useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Smile, MapPin, Image as ImageIcon, Video, Send } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { InteractiveButton } from '@/components/enhanced/InteractiveButton';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
@@ -20,64 +21,57 @@ export const PostCreationInterface = React.memo(({ onPost }: PostCreationInterfa
   }, [postContent, onPost]);
 
   return (
-    <div className="bg-gray-800/40 backdrop-blur-md rounded-2xl p-4 border border-gray-700/50">
+    <motion.div 
+      className="bg-card/80 backdrop-blur-md rounded-2xl p-4 border border-border/50 shadow-lg"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <div className="flex items-start space-x-3">
         <Avatar className="w-10 h-10">
           <AvatarImage src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100&h=100&fit=crop&crop=face" />
-          <AvatarFallback className="bg-purple-500 text-white">U</AvatarFallback>
+          <AvatarFallback className="bg-primary text-primary-foreground">U</AvatarFallback>
         </Avatar>
         <div className="flex-1">
           <div className="relative">
             <Input
-              placeholder="Share something"
+              placeholder="Share something amazing..."
               value={postContent}
               onChange={(e) => setPostContent(e.target.value)}
-              className="bg-gray-900/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-purple-500 rounded-full pr-12 backdrop-blur-sm"
+              className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary rounded-full pr-12 backdrop-blur-sm transition-all duration-300"
             />
           </div>
           <div className="flex items-center justify-between mt-3">
             <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 p-2 rounded-full"
-              >
-                <ImageIcon className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 p-2 rounded-full"
-              >
-                <Video className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 p-2 rounded-full"
-              >
-                <MapPin className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 p-2 rounded-full"
-              >
-                <Smile className="h-4 w-4" />
-              </Button>
+              {[
+                { icon: ImageIcon, color: "text-blue-500" },
+                { icon: Video, color: "text-red-500" },
+                { icon: MapPin, color: "text-green-500" },
+                { icon: Smile, color: "text-yellow-500" }
+              ].map(({ icon: Icon, color }, index) => (
+                <motion.button
+                  key={index}
+                  className={`${color} hover:bg-accent/50 p-2 rounded-full transition-colors duration-200`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Icon className="h-4 w-4" />
+                </motion.button>
+              ))}
             </div>
-            <Button
+            <InteractiveButton
               onClick={handlePost}
               disabled={!postContent.trim()}
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6 disabled:opacity-50 disabled:cursor-not-allowed"
+              glowEffect
+              className="bg-primary hover:bg-primary-dark text-primary-foreground rounded-full px-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send className="h-4 w-4 mr-2" />
               Send
-            </Button>
+            </InteractiveButton>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 
