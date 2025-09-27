@@ -49,17 +49,17 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
+    <footer className="bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 BBROKER
               </span>
             </div>
-            <p className="text-gray-300 mb-6 max-w-md">
+            <p className="text-muted-foreground mb-6 max-w-md">
               Connecting businesses and professionals worldwide through a powerful networking platform 
               that transforms how you discover and engage with business content.
             </p>
@@ -68,10 +68,10 @@ const Footer = () => {
                 <a
                   key={index}
                   href={social.href}
-                  className="w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition-colors duration-200 group"
+                  className="w-10 h-10 bg-accent hover:bg-primary rounded-lg flex items-center justify-center transition-colors duration-200 group"
                   aria-label={social.label}
                 >
-                  <social.icon className="h-5 w-5 text-gray-300 group-hover:text-white" />
+                  <social.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary-foreground" />
                 </a>
               ))}
             </div>
@@ -80,13 +80,13 @@ const Footer = () => {
           {/* Footer Links */}
           {footerSections.map((section, index) => (
             <div key={index}>
-              <h3 className="text-white font-semibold mb-4">{section.title}</h3>
+              <h3 className="text-foreground font-semibold mb-4">{section.title}</h3>
               <ul className="space-y-3">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-gray-300 hover:text-purple-300 transition-colors duration-200"
+                      className="text-muted-foreground hover:text-primary transition-colors duration-200"
                     >
                       {link.name}
                     </a>
@@ -98,11 +98,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center">
+          <p className="text-muted-foreground text-sm mb-4 md:mb-0">
             © 2024 BBROKER. All rights reserved.
           </p>
-          <div className="flex items-center space-x-6 text-sm text-gray-400">
+          <div className="flex items-center space-x-6 text-sm text-muted-foreground">
             <span>Made for business professionals worldwide</span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center">

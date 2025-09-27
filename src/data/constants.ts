@@ -65,22 +65,22 @@ export const SUGGESTIONS: Suggestion[] = [
 export const RECOMMENDATIONS: Recommendation[] = [
   {
     name: "Music",
-    color: "bg-pink-500",
+    color: "bg-gradient-primary",
     icon: "🎵"
   },
   {
     name: "UI/UX",
-    color: "bg-gray-600",
+    color: "bg-secondary",
     icon: "✏️"
   },
   {
     name: "Cooking",
-    color: "bg-orange-500",
+    color: "bg-accent",
     icon: "🍳"
   },
   {
     name: "Hiking",
-    color: "bg-purple-500",
+    color: "bg-primary",
     icon: "⛰️"
   }
 ];

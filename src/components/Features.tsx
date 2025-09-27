@@ -36,16 +36,16 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-24 bg-gray-900">
+    <section id="features" className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             Everything you need to{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
               automate creativity
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             From simple tasks to complex workflows, Bopav Studios provides the tools 
             and flexibility to transform how your team creates and collaborates.
           </p>
@@ -55,19 +55,19 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group p-8 bg-gray-800/50 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105"
+              className="group p-8 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:transform hover:scale-105"
             >
               <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="h-6 w-6 text-white" />
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-primary rounded-lg group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
               </div>
               
-              <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-purple-300 transition-colors">
+              <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors">
                 {feature.title}
               </h3>
               
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>

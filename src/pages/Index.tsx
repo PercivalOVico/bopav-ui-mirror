@@ -1,18 +1,22 @@
 
+import React from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import Footer from '@/components/Footer';
+import { PageContainer } from '@/components/layout/PageContainer';
 
-const Index = () => {
+const Index = React.memo(() => {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <PageContainer withErrorBoundary={false} padding={false}>
       <Navigation />
       <Hero />
       <Features />
       <Footer />
-    </div>
+    </PageContainer>
   );
-};
+});
+
+Index.displayName = 'Index';
 
 export default Index;
