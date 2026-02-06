@@ -76,17 +76,9 @@ const LoginForm = () => {
       return;
     }
 
-    // Simulate authentication check (replace with real auth logic)
-    // For demo purposes, any email/password combination will be "invalid"
-    setErrors({
-      email: '',
-      password: '',
-      confirmPassword: '',
-      general: 'Invalid credentials, please try again'
-    });
-    triggerShakeEffect();
-    
+    // Mock login - accept any valid credentials and redirect to home
     console.log('Form submitted:', formData);
+    navigate('/posts');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
